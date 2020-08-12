@@ -2,9 +2,9 @@ package com.example.todolist
 
 import Data.TaskDataBase
 import Model.Task
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -12,13 +12,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_task_list.*
-import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TaskListActivity : AppCompatActivity() {
 
@@ -26,16 +25,32 @@ class TaskListActivity : AppCompatActivity() {
     lateinit var taskList: MutableList<Task>
     lateinit var taskAdapter: TaskAdapter
 
+    var day: String = ""
+
+    val pattern = "yy.MM.dd"
+    val simpleDateFormat = SimpleDateFormat(pattern)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
 
+        if(intent != null){
+            day = intent.getStringExtra("day").toString()
+        }else{
+            day = simpleDateFormat.format(Date())
+        }
+
+
         db = Room.databaseBuilder(
         applicationContext,
         TaskDataBase::class.java, "taskDB").allowMainThreadQueries().build()
 
-        taskList= db.taskDao().getAll()
+        Log.v("DayString", day)
+
+
+        taskList = db.taskDao().getAllOnDay(day)
+
 
 
         val recyclerView: RecyclerView = findViewById(R.id.taskRecyclerView)
@@ -44,12 +59,13 @@ class TaskListActivity : AppCompatActivity() {
         recyclerView.adapter = taskAdapter
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        addButton.setOnClickListener(View.OnClickListener {
+        addButton.setOnClickListener {
             addAndEditTask(false, null, null)
-        })
+        }
 
 
     }
+
 
     fun addAndEditTask(isUpdate: Boolean, task: Task?, position: Int?) {
         val layoutInflaterAndroid = LayoutInflater.from(applicationContext)
@@ -102,7 +118,7 @@ class TaskListActivity : AppCompatActivity() {
 
     fun createTask (description: String, isDone: Boolean){
         
-        val id = db.taskDao().insertTask(Task(0, description, isDone))
+        val id = db.taskDao().insertTask(Task(0, description, isDone, day))
 
         val task = db.taskDao().getTaskById(id)
         taskList.add(task)

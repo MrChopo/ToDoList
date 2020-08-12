@@ -10,6 +10,9 @@ interface TaskDAO {
         @Query("SELECT * FROM tasks")
         fun getAll(): MutableList<Task>
 
+        @Query("SELECT * FROM tasks WHERE day = :day")
+        fun getAllOnDay(day: String): MutableList<Task>
+
         @Query("SELECT * FROM tasks WHERE id IN (:taskIds)")
         fun loadAllByIds(taskIds: IntArray): MutableList<Task>
 

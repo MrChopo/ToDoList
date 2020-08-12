@@ -13,12 +13,10 @@ import android.util.Log
 class TaskAdapter(private val items :MutableList<Task>, private val taskListActivity: TaskListActivity): RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
 
 
-    class MyViewHolder(itemView: View, private val context: Context, val taskListActivity: TaskListActivity) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View, private val taskListActivity: TaskListActivity) : RecyclerView.ViewHolder(itemView) {
 
         private val description: TextView = itemView.findViewById(R.id.itemDescription)
         private var switch: SwitchCompat = itemView.findViewById(R.id.itemSwitch)
-        private var linerLayout: LinearLayout = itemView.findViewById(R.id.itemLayout)
-
 
         fun bind(item : Task, position: Int){
 
@@ -44,7 +42,7 @@ class TaskAdapter(private val items :MutableList<Task>, private val taskListActi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.task_list_item, parent, false)
-        return MyViewHolder(view, parent.context, taskListActivity)
+        return MyViewHolder(view, taskListActivity)
     }
 
     override fun getItemCount(): Int {
