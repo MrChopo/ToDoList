@@ -1,5 +1,6 @@
 package Data
 
+import Model.DayCountTask
 import Model.Task
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -9,6 +10,9 @@ interface TaskDAO {
 
         @Query("SELECT * FROM tasks")
         fun getAll(): MutableList<Task>
+
+        @Query("SELECT day, COUNT(id) AS countDayTask, SUM(isDone) AS countDoneDayTask FROM tasks GROUP BY day")
+        fun getAllInDay(): MutableList<DayCountTask>
 
         @Query("SELECT * FROM tasks WHERE day = :day")
         fun getAllOnDay(day: String): MutableList<Task>
