@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "tasks")
 class Task(@PrimaryKey(autoGenerate = true) var id: Int,
-           @ColumnInfo(name = "description") val description: String,
-           @ColumnInfo(name = "isDone") val isDone: Boolean)
+           @ColumnInfo(name = "description") var description: String,
+           @ColumnInfo(name = "isDone") var isDone: Boolean)
 
 

@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 import Model.Task
+import android.util.Log
 
 class TaskAdapter(private val items :MutableList<Task>, private val taskListActivity: TaskListActivity): RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
 
@@ -24,13 +25,15 @@ class TaskAdapter(private val items :MutableList<Task>, private val taskListActi
             description.text = item.description
             switch.isChecked = item.isDone
 
+
             switch.setOnCheckedChangeListener{ _, b: Boolean ->
-                Toast.makeText(context, "Position: $position", Toast.LENGTH_LONG).show()
-                //taskListActivity.addAndEditTask(false, item, position)
+                taskListActivity.upgradeCheckTask(position, b)
+                //Toast.makeText(context, "Position: $position", Toast.LENGTH_LONG).show()
             }
 
             description.setOnClickListener(View.OnClickListener {
-                Toast.makeText(context, "Text view: $position", Toast.LENGTH_LONG).show()
+                taskListActivity.addAndEditTask(true, item, position)
+                //Toast.makeText(context, "Text view: $position", Toast.LENGTH_LONG).show()
             })
 
 

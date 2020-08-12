@@ -2,10 +2,7 @@ package Data
 
 import Model.Task
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface TaskDAO {
@@ -18,6 +15,9 @@ interface TaskDAO {
 
         @Query("SELECT * FROM tasks WHERE id = :taskId")
         fun getTaskById(taskId: Long): Task
+
+        @Update
+        fun upgradeTask(task: Task)
 
         @Insert
         fun insertAll(vararg tasks: Task)
