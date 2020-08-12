@@ -40,6 +40,7 @@ class TaskListActivity : AppCompatActivity() {
         }else{
             day = simpleDateFormat.format(Date())
         }
+        setTitle(day)
 
 
         db = Room.databaseBuilder(

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +23,11 @@ class DayListAdapter(private val dayList: MutableList<DayCountTask>):
         private val day: TextView = itemView.findViewById(R.id.dayItemTextView)
         private val dayCountTask: TextView = itemView.findViewById(R.id.dayCountTaskItemTextView)
         private val dayCountDoneTask: TextView = itemView.findViewById(R.id.dayCountDoneTaskItemTextView)
-        private val dayLinearLayout: LinearLayout = itemView.findViewById(R.id.dayLinearLayout)
+        private val dayLinearLayout: CardView = itemView.findViewById(R.id.dayLinearLayout)
 
         fun bind(item : DayCountTask) {
             day.text = item.day
-            dayCountTask.text = "All: ${item.countDayTask}"
+            dayCountTask.text = "All task: ${item.countDayTask}"
             dayCountDoneTask.text = "Done: ${item.countDoneDayTask}"
 
             dayLinearLayout.setOnClickListener{

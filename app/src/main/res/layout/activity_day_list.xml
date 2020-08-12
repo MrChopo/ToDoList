@@ -8,6 +8,7 @@
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:listitem="@layout/day_list_item"
     tools:context=".DayListActivity"
+    android:background="@color/backgroundCardView"
     android:padding="5dp">
 
 </androidx.recyclerview.widget.RecyclerView>
